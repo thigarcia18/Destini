@@ -28,15 +28,14 @@ class ViewController: UIViewController {
     @IBOutlet weak var topButton: UIButton!
     @IBOutlet weak var bottomButton: UIButton!
     @IBOutlet weak var storyTextView: UILabel!
+    @IBOutlet weak var restartButton: UIButton!
     
     var storyIndex = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        storyTextView.text = story1
-        topButton.setTitle(answer1a, for: .normal)
-        bottomButton.setTitle(answer1b, for: .normal)
+        setInitialStory()
     }
     
     @IBAction func buttonPressed(_ sender: UIButton) {
@@ -45,29 +44,37 @@ class ViewController: UIViewController {
             storyTextView.text = story3
             topButton.setTitle(answer3a, for: .normal)
             bottomButton.setTitle(answer3b, for: .normal)
-            return
-        }
-        if sender.tag == 2 && storyIndex == 1 {
+        } else if sender.tag == 2 && storyIndex == 1 {
+            storyIndex = 2
             storyTextView.text = story2
             topButton.setTitle(answer2a, for: .normal)
             bottomButton.setTitle(answer2b, for: .normal)
-            return
-        }
-        if sender.tag == 1 && storyIndex == 3 {
+        } else if sender.tag == 1 && storyIndex == 3 {
+            storyIndex = 6
             storyTextView.text = story6
             hideButtons()
-            return
-        }
-        if sender.tag == 2 && storyIndex == 3 {
+        } else if sender.tag == 2 && storyIndex == 3 {
+            storyIndex = 5
             storyTextView.text = story5
             hideButtons()
-            return
-        }
-        if sender.tag == 2 && storyIndex == 2 {
+        } else if sender.tag == 2 && storyIndex == 2 {
+            storyIndex = 4
             storyTextView.text = story4
             hideButtons()
+        }
+        
+        if storyIndex == 4 || storyIndex == 5 || storyIndex == 6 {
+            restartButton.isHidden = false
             return
         }
+    }
+    
+    @IBAction func restartButtonPressed(_ sender: UIButton) {
+        setInitialStory()
+        restartButton.isHidden = true
+        storyIndex = 1
+        topButton.isHidden = false
+        bottomButton.isHidden = false
     }
     
     func hideButtons() {
@@ -75,6 +82,11 @@ class ViewController: UIViewController {
         bottomButton.isHidden = true
     }
 
+    func setInitialStory() {
+        storyTextView.text = story1
+        topButton.setTitle(answer1a, for: .normal)
+        bottomButton.setTitle(answer1b, for: .normal)
+    }
 
 }
 
